@@ -1,8 +1,10 @@
 import SwiftUI
+import StoreKit
 
 struct MainTabView: View {
     @EnvironmentObject var portfolioVM: PortfolioViewModel
     @EnvironmentObject var lang: LanguageViewModel
+    @Environment(\.requestReview) private var requestReview
 
     var body: some View {
         TabView {
@@ -27,6 +29,11 @@ struct MainTabView: View {
         .tint(.blue)
         .task {
             await portfolioVM.loadAll()
+        }
+        .onChange(of: portfolioVM.shouldRequestReview) { _, newValue in
+            if newValue {
+                requestReview()
+            }
         }
     }
 }
