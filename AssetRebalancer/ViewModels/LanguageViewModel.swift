@@ -82,6 +82,7 @@ extension LanguageViewModel {
     var signOut: String { t("登出", "Sign Out") }
     var account: String { t("帳號", "Account") }
     var targetAllocationSetting: String { t("目標資產配置", "Target Asset Allocation") }
+    var allocationTemplates: String { t("快速套用模板", "Quick Templates") }
 
     // Login
     var welcome: String { t("資產再平衡", "Asset Rebalancer") }

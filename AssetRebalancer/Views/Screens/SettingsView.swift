@@ -11,6 +11,42 @@ struct SettingsView: View {
     @State private var showDeleteError = false
     @State private var deleteErrorMessage = ""
 
+    // MARK: - Allocation Templates
+
+    private var templateButtons: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(lang.allocationTemplates)
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            HStack(spacing: 8) {
+                ForEach(AllocationTemplate.allCases) { template in
+                    let isSelected = template.matches(portfolioVM.targetAllocation)
+                    Button {
+                        portfolioVM.targetAllocation = template.allocation
+                        Task { await portfolioVM.saveTarget() }
+                    } label: {
+                        VStack(spacing: 2) {
+                            Text(lang.localized(template.displayName))
+                                .font(.subheadline)
+                                .fontWeight(isSelected ? .semibold : .regular)
+                            Text("\(Int(template.allocation.stock))/\(Int(template.allocation.bond))/\(Int(template.allocation.cash))")
+                                .font(.caption2)
+                                .foregroundColor(isSelected ? .white.opacity(0.8) : .secondary)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                        .background(isSelected ? Color.accentColor : Color(.tertiarySystemFill))
+                        .foregroundColor(isSelected ? .white : .primary)
+                        .cornerRadius(8)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+        .padding(.vertical, 4)
+    }
+
     var body: some View {
         NavigationStack {
             Form {
@@ -51,6 +87,8 @@ struct SettingsView: View {
 
                 // Target Allocation
                 Section(lang.targetAllocationSetting) {
+                    templateButtons
+
                     AllocationSlider(
                         label: lang.stocks,
                         value: $portfolioVM.targetAllocation.stock,

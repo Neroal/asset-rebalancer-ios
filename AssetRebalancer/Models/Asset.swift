@@ -116,3 +116,35 @@ struct TargetAllocation: Codable {
         abs(stock + bond + cash - 100.0) < 0.01
     }
 }
+
+// MARK: - Allocation Template
+enum AllocationTemplate: CaseIterable, Identifiable {
+    case aggressive
+    case balanced
+    case conservative
+
+    var id: Self { self }
+
+    var displayName: (zh: String, en: String) {
+        switch self {
+        case .aggressive: return ("積極型", "Aggressive")
+        case .balanced: return ("穩健型", "Balanced")
+        case .conservative: return ("保守型", "Conservative")
+        }
+    }
+
+    var allocation: TargetAllocation {
+        switch self {
+        case .aggressive: return TargetAllocation(stock: 80, bond: 15, cash: 5)
+        case .balanced: return TargetAllocation(stock: 60, bond: 30, cash: 10)
+        case .conservative: return TargetAllocation(stock: 40, bond: 40, cash: 20)
+        }
+    }
+
+    /// Whether the given target matches this template's ratios
+    func matches(_ target: TargetAllocation) -> Bool {
+        abs(target.stock - allocation.stock) < 0.01 &&
+        abs(target.bond - allocation.bond) < 0.01 &&
+        abs(target.cash - allocation.cash) < 0.01
+    }
+}
