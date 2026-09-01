@@ -6,16 +6,18 @@ actor StockAPIService {
 
     private var cache: [String: (price: Double, timestamp: Date)] = [:]
     private var exchangeCache: [String: String] = [:]
-    private let cacheDuration: TimeInterval = 3600 // 1 hour
+    private let defaultCacheDuration: TimeInterval = 3600 // 1 hour
+    private let intradayCacheDuration: TimeInterval = 60 // 1 minute while TW market is open
 
     // MARK: - Fetch Price
 
-    func fetchPrice(symbol: String, market: MarketType) async throws -> Double {
+    func fetchPrice(symbol: String, market: MarketType, forceRefresh: Bool = false) async throws -> Double {
         let cacheKey = "\(market.rawValue):\(symbol)"
 
-        // Check cache
-        if let cached = cache[cacheKey],
-           Date().timeIntervalSince(cached.timestamp) < cacheDuration {
+        // Check cache (skipped when the user explicitly pulls to refresh)
+        if !forceRefresh,
+           let cached = cache[cacheKey],
+           Date().timeIntervalSince(cached.timestamp) < cacheDuration(for: market) {
             return cached.price
         }
 
@@ -29,6 +31,28 @@ actor StockAPIService {
 
         cache[cacheKey] = (price, Date())
         return price
+    }
+
+    // MARK: - Cache Duration
+
+    private func cacheDuration(for market: MarketType) -> TimeInterval {
+        (market == .tw && isTWMarketOpen()) ? intradayCacheDuration : defaultCacheDuration
+    }
+
+    /// TW market hours: Mon–Fri 09:00–13:45 Asia/Taipei (buffer past the 13:30
+    /// close so the final auction price settles). Holidays are not special-cased —
+    /// a false positive only shortens the cache, returning the same closed price.
+    private func isTWMarketOpen(now: Date = Date()) -> Bool {
+        var calendar = Calendar(identifier: .gregorian)
+        guard let taipei = TimeZone(identifier: "Asia/Taipei") else { return false }
+        calendar.timeZone = taipei
+
+        let weekday = calendar.component(.weekday, from: now)
+        guard (2...6).contains(weekday) else { return false }
+
+        let minutes = calendar.component(.hour, from: now) * 60
+                    + calendar.component(.minute, from: now)
+        return minutes >= 9 * 60 && minutes <= 13 * 60 + 45
     }
 
     // MARK: - Taiwan Stocks (TWSE + TPEx auto-detect)

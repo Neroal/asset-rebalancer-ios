@@ -90,7 +90,7 @@ struct AssetsView: View {
                 EditAssetView(asset: asset)
             }
             .refreshable {
-                await portfolioVM.refreshPrices()
+                await portfolioVM.refreshPrices(force: true)
             }
         }
     }
