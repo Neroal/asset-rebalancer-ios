@@ -34,6 +34,10 @@
 		D82555C72F59B95F00623301 /* DeviationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82555C32F59B95F00623301 /* DeviationRow.swift */; };
 		D82555C82F59B95F00623301 /* AllocationSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82555C42F59B95F00623301 /* AllocationSlider.swift */; };
 		D8B51DCC2FC7E65300F385BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D8B51DCB2FC7E65300F385BE /* GoogleService-Info.plist */; };
+		D8AA550A2F5D00000000000A /* RebalancerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AA55092F5D000000000009 /* RebalancerTests.swift */; };
+		D8AA550B2F5D00000000000B /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82555722F59B95F00623301 /* Asset.swift */; };
+		D8AA550C2F5D00000000000C /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82555732F59B95F00623301 /* Portfolio.swift */; };
+		D8AA550D2F5D00000000000D /* Rebalancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D825557D2F59B95F00623301 /* Rebalancer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +68,8 @@
 		D82555C42F59B95F00623301 /* AllocationSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllocationSlider.swift; sourceTree = "<group>"; };
 		D8B51DCB2FC7E65300F385BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D8E835F02F5BF00000FE040A /* AssetRebalancer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AssetRebalancer.entitlements; sourceTree = "<group>"; };
+		D8AA55072F5D000000000007 /* AssetRebalancerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AssetRebalancerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8AA55092F5D000000000009 /* RebalancerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RebalancerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +83,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D8AA55062F5D000000000006 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -84,8 +97,18 @@
 			isa = PBXGroup;
 			children = (
 				D825558B2F59B95F00623301 /* AssetRebalancer */,
+				D8AA55082F5D000000000008 /* AssetRebalancerTests */,
 				D82555A92F59BA9A00623301 /* AssetRebalancer.app */,
+				D8AA55072F5D000000000007 /* AssetRebalancerTests.xctest */,
 			);
+			sourceTree = "<group>";
+		};
+		D8AA55082F5D000000000008 /* AssetRebalancerTests */ = {
+			isa = PBXGroup;
+			children = (
+				D8AA55092F5D000000000009 /* RebalancerTests.swift */,
+			);
+			path = AssetRebalancerTests;
 			sourceTree = "<group>";
 		};
 		D82555742F59B95F00623301 /* Models */ = {
@@ -202,6 +225,24 @@
 			productReference = D82555A92F59BA9A00623301 /* AssetRebalancer.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D8AA55012F5D000000000001 /* AssetRebalancerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D8AA55022F5D000000000002 /* Build configuration list for PBXNativeTarget "AssetRebalancerTests" */;
+			buildPhases = (
+				D8AA55052F5D000000000005 /* Sources */,
+				D8AA55062F5D000000000006 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AssetRebalancerTests;
+			packageProductDependencies = (
+			);
+			productName = AssetRebalancerTests;
+			productReference = D8AA55072F5D000000000007 /* AssetRebalancerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -213,6 +254,9 @@
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
 					D82555032F59B8D500623301 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					D8AA55012F5D000000000001 = {
 						CreatedOnToolsVersion = 26.3;
 					};
 				};
@@ -236,6 +280,7 @@
 			projectRoot = "";
 			targets = (
 				D82555032F59B8D500623301 /* AssetRebalancer */,
+				D8AA55012F5D000000000001 /* AssetRebalancerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -279,6 +324,17 @@
 				D82555C62F59B95F00623301 /* EditAssetView.swift in Sources */,
 				D82555C72F59B95F00623301 /* DeviationRow.swift in Sources */,
 				D82555C82F59B95F00623301 /* AllocationSlider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D8AA55052F5D000000000005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8AA550A2F5D00000000000A /* RebalancerTests.swift in Sources */,
+				D8AA550B2F5D00000000000B /* Asset.swift in Sources */,
+				D8AA550C2F5D00000000000C /* Portfolio.swift in Sources */,
+				D8AA550D2F5D00000000000D /* Rebalancer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +540,46 @@
 			};
 			name = Release;
 		};
+		D8AA55032F5D000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3YS47ACJA4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.neroal.asset-rebalancer.tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D8AA55042F5D000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3YS47ACJA4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.neroal.asset-rebalancer.tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -501,6 +597,15 @@
 			buildConfigurations = (
 				D82555102F59B8D600623301 /* Debug */,
 				D82555112F59B8D600623301 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D8AA55022F5D000000000002 /* Build configuration list for PBXNativeTarget "AssetRebalancerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8AA55032F5D000000000003 /* Debug */,
+				D8AA55042F5D000000000004 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
