@@ -32,7 +32,7 @@ struct DashboardView: View {
                 .padding()
             }
             .refreshable {
-                await portfolioVM.refreshPrices()
+                await portfolioVM.refreshPrices(force: true)
             }
             .navigationTitle(lang.tabDashboard)
             .overlay {

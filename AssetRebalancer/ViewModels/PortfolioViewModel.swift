@@ -51,7 +51,7 @@ class PortfolioViewModel: ObservableObject {
 
     // MARK: - Refresh Prices
 
-    func refreshPrices() async {
+    func refreshPrices(force: Bool = false) async {
         isRefreshing = true
         defer { isRefreshing = false }
 
@@ -74,7 +74,7 @@ class PortfolioViewModel: ObservableObject {
             if (asset.category == .stock || asset.category == .bond), let market = asset.marketType {
                 do {
                     let price = try await StockAPIService.shared.fetchPrice(
-                        symbol: asset.symbol, market: market
+                        symbol: asset.symbol, market: market, forceRefresh: force
                     )
                     updatedAssets[i].marketPrice = price
 
