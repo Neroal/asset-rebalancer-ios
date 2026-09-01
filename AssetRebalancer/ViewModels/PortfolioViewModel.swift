@@ -18,10 +18,18 @@ class PortfolioViewModel: ObservableObject {
         }
     }
 
+    /// Flips to true once, after the user's 5th successful add/edit,
+    /// to let the UI trigger an App Store review request
+    @Published var shouldRequestReview = false
+
     private let firestore = FirestoreService.shared
 
     /// Masked placeholder for hidden values
     static let maskedText = "••••••"
+
+    private static let operationCountKey = "asset_operation_count"
+    private static let hasRequestedReviewKey = "has_requested_review"
+    private static let reviewThreshold = 5
 
     init() {
         self.hideAssets = UserDefaults.standard.bool(forKey: "hide_assets")
@@ -134,6 +142,7 @@ class PortfolioViewModel: ObservableObject {
         do {
             try await firestore.saveAsset(asset)
             errorMessage = nil
+            trackAssetOperation()
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -149,12 +158,30 @@ class PortfolioViewModel: ObservableObject {
         do {
             try await firestore.saveAsset(asset)
             errorMessage = nil
+            trackAssetOperation()
         } catch {
             errorMessage = error.localizedDescription
         }
 
         if asset.marketType != nil {
             await refreshPrices()
+        }
+    }
+
+    // MARK: - Review Request
+
+    /// Counts successful add/edit operations (deletes excluded); at the
+    /// threshold, requests an App Store review exactly once per install.
+    private func trackAssetOperation() {
+        let defaults = UserDefaults.standard
+        guard !defaults.bool(forKey: Self.hasRequestedReviewKey) else { return }
+
+        let count = defaults.integer(forKey: Self.operationCountKey) + 1
+        defaults.set(count, forKey: Self.operationCountKey)
+
+        if count >= Self.reviewThreshold {
+            defaults.set(true, forKey: Self.hasRequestedReviewKey)
+            shouldRequestReview = true
         }
     }
 
